@@ -1,11 +1,29 @@
 version: "3"
+
 services:
   web:
     image: nginx:1.22
     volumes:
-    - ./frontend/nginx.conf:/etc/nginx/nginx.conf:ro
-    - ./frontend/static:/var/www/static
+      - ./frontend/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend/static:/var/www/static
     ports:
-    - 80:80
+      - 80:80
+
   todo-api-service:
     build: ./backend
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ROOT
+      MYSQL_DATABASE: ${MYSQL_DB}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PWD}
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  mysql-data:
+
+
