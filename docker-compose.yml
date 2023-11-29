@@ -11,6 +11,14 @@ services:
 
   todo-api-service:
     build: ./backend
+    environment:
+      STORAGE: ${STORAGE}
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_DB: ${MYSQL_DB}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PWD: ${MYSQL_PWD}
+    depends_on:
+      - mysql
 
   mysql:
     image: mysql:latest
